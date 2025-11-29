@@ -4,11 +4,48 @@
     overflow: hidden;
     transition: all var(--transition-base);
     border: 2px solid transparent;
+    position: relative;
 }
 
 .recipe-card:hover {
     border-color: var(--herb-green);
     box-shadow: var(--shadow-xl);
+}
+
+/* ===== NOTIFICATION TOAST ===== */
+.notification-toast {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    z-index: 100;
+    animation: slideInRight 0.3s ease-out;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.notification-toast.success {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+.notification-toast.error {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 /* ===== RECIPE HEADER ===== */
@@ -47,6 +84,56 @@
     font-size: 0.95rem;
     line-height: 1.5;
     margin: 0;
+}
+
+/* ===== RECIPE ACTIONS ===== */
+.recipe-actions {
+    display: flex;
+    gap: 0.75rem;
+    padding: var(--spacing-md);
+    background: var(--background-light);
+    border-bottom: 2px solid #E2E8F0;
+}
+
+.btn-action {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e2e8f0;
+    background: white;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.btn-action span {
+    font-size: 1.25rem;
+}
+
+.btn-action:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-action:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-action.active {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border-color: #10b981;
+}
+
+.btn-action.active.favorite {
+    background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+    border-color: #ec4899;
 }
 
 /* ===== RECIPE META ===== */
@@ -235,5 +322,9 @@
 
     .instructions-container.collapsed {
         max-height: 250px;
+    }
+
+    .recipe-actions {
+        flex-direction: column;
     }
 }
