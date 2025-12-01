@@ -2,9 +2,11 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider } from './context/AuthContext'
 import Login from './components/auth/Login'
 import Signup from './components/auth/Signup'
-import PrivateRoute from './components/auth/PrivateRoute'
+import PublicRoute from './components/auth/PublicRoute'
+import ProtectedRoutes from './components/auth/ProtectedRoutes'
 import RecipeGenerator from './components/RecipeGenerator'
 import Home from './pages/Home'
+import LandingPage from './pages/LandingPage'
 import './App.css'
 
 function App() {
@@ -13,18 +15,18 @@ function App() {
             <Router>
                 <Routes>
                     {/* Public Routes */}
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/signup" element={<Signup />} />
-
-                    {/* Protected Routes */}
-                    <Route path="/home" element={
-                        <PrivateRoute>
-                            <Home />
-                        </PrivateRoute>
+                    <Route path="/" element={<LandingPage />} />
+                    <Route path="/login" element={
+                        <PublicRoute>
+                            <Login />
+                        </PublicRoute>
                     } />
 
-                    <Route path="/recipes" element={
-                        <PrivateRoute>
+                    {/* All other routes are protected */}
+                    <Route element={<ProtectedRoutes />}>
+                        <Route path="/signup" element={<Signup />} />
+                        <Route path="/home" element={<Home />} />
+                        <Route path="/recipes" element={
                             <div className="app">
                                 <header className="app-header">
                                     <div className="container">
@@ -50,11 +52,14 @@ function App() {
                                     </div>
                                 </footer>
                             </div>
-                        </PrivateRoute>
-                    } />
-
-                    {/* Default redirect */}
-                    <Route path="/" element={<Navigate to="/login" />} />
+                        } />
+                        
+                        {/* Catch-all route for any other protected paths */}
+                        <Route path="*" element={<Navigate to="/home" replace />} />
+                    </Route>
+                    
+                    {/* Catch-all for unknown public routes - redirect to landing page */}
+                    <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
             </Router>
         </AuthProvider>

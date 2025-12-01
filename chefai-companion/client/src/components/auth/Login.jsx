@@ -10,15 +10,17 @@ function Login() {
 
     const [formData, setFormData] = useState({
         email: '',
-        password: ''
+        password: '',
+        remember: false
     });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
+        const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value
+            [e.target.name]: value
         });
     };
 
@@ -28,7 +30,10 @@ function Login() {
         setLoading(true);
 
         try {
-            const response = await loginUser(formData);
+            const response = await loginUser({
+                email: formData.email,
+                password: formData.password
+            });
 
             if (response.success) {
                 login(response.user);
@@ -43,76 +48,128 @@ function Login() {
         }
     };
 
+    const handleSocialLogin = (provider) => {
+        // Placeholder for social login functionality
+        console.log(`Login with ${provider}`);
+    };
+
     return (
-        <div className="auth-page">
-            <div className="auth-container">
-                <div className="auth-card">
-                    <div className="auth-header">
-                        <div className="auth-logo">
-                            <span className="logo-icon">👨‍🍳</span>
-                            <h1>ChefAI Companion</h1>
+        <div className="login-page">
+            <div className="container">
+                {/* Left Side - Info */}
+                <div className="login-info">
+                    <div className="logo">🍳 Chef AI</div>
+                    <h1>Create Your AI Kitchen Copilot</h1>
+                    
+                    <ul className="benefits">
+                        <li>
+                            <strong>15 Weekly Credits</strong>
+                            Create a free account and receive 15 credits every week for generating recipes and meal plans
+                        </li>
+                        <li>
+                            <strong>Recipe & Plan History</strong>
+                            All your creations are saved. Access from any device, anytime
+                        </li>
+                        <li>
+                            <strong>Bookmark & Favorites</strong>
+                            Build your personal cookbook and organize all your favorites
+                        </li>
+                    </ul>
+                </div>
+
+                {/* Right Side - Form */}
+                <div className="login-form-container">
+                    <h2 className="form-title">Login or Register</h2>
+                    <p className="form-subtitle">Start creating amazing recipes with AI</p>
+
+                    {error && (
+                        <div className="error-alert">
+                            <span>⚠️</span>
+                            {error}
                         </div>
-                        <h2>Welcome Back!</h2>
-                        <p>Login to access your personalized recipes</p>
+                    )}
+
+                    {/* Social Login */}
+                    <div className="social-buttons">
+                        <button 
+                            type="button"
+                            className="social-btn"
+                            onClick={() => handleSocialLogin('Google')}
+                        >
+                            <span>🔵</span> Google
+                        </button>
+                        <button 
+                            type="button"
+                            className="social-btn"
+                            onClick={() => handleSocialLogin('Apple')}
+                        >
+                            <span>🍎</span> Apple
+                        </button>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="auth-form">
-                        {error && (
-                            <div className="error-alert">
-                                <span>⚠️</span>
-                                {error}
-                            </div>
-                        )}
+                    <div className="divider">
+                        <span>or continue with email</span>
+                    </div>
 
+                    {/* Email Form */}
+                    <form onSubmit={handleSubmit}>
                         <div className="form-group">
                             <label htmlFor="email">Email Address</label>
-                            <input
-                                type="email"
-                                id="email"
+                            <input 
+                                type="email" 
+                                id="email" 
                                 name="email"
                                 value={formData.email}
                                 onChange={handleChange}
-                                placeholder="Enter your email"
+                                placeholder="you@example.com"
                                 required
                             />
                         </div>
 
                         <div className="form-group">
                             <label htmlFor="password">Password</label>
-                            <input
-                                type="password"
-                                id="password"
+                            <input 
+                                type="password" 
+                                id="password" 
                                 name="password"
                                 value={formData.password}
                                 onChange={handleChange}
-                                placeholder="Enter your password"
+                                placeholder="••••••••"
                                 required
                             />
                         </div>
 
-                        <button
-                            type="submit"
-                            className="btn btn-primary btn-auth"
+                        <div className="checkbox-group">
+                            <label className="checkbox-wrapper">
+                                <input 
+                                    type="checkbox" 
+                                    id="remember"
+                                    name="remember"
+                                    checked={formData.remember}
+                                    onChange={handleChange}
+                                />
+                                <span>Remember me</span>
+                            </label>
+                            <Link to="/forgot-password" className="forgot-link">Forgot password?</Link>
+                        </div>
+
+                        <button 
+                            type="submit" 
+                            className="btn-login"
                             disabled={loading}
                         >
-                            {loading ? (
-                                <>
-                                    <div className="spinner-small"></div>
-                                    Logging in...
-                                </>
-                            ) : (
-                                'Login'
-                            )}
+                            {loading ? 'Signing in...' : 'Sign In'}
                         </button>
                     </form>
 
-                    <div className="auth-footer">
-                        <p>
-                            Don't have an account?{' '}
-                            <Link to="/signup" className="auth-link">
-                                Sign up here
-                            </Link>
-                        </p>
+                    <div className="signup-link">
+                        Don't have an account? <Link to="/signup">Create one for free</Link>
+                    </div>
+
+                    <div className="terms">
+                        By signing in, you agree to our{' '}
+                        <Link to="/terms">terms of use</Link> and{' '}
+                        <Link to="/privacy">privacy policy</Link>
                     </div>
                 </div>
             </div>
