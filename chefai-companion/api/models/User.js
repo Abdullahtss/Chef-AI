@@ -31,6 +31,10 @@ const userSchema = new mongoose.Schema({
     avatar: {
         type: String
     },
+    darkMode: {
+        type: Boolean,
+        default: false
+    },
     authProvider: {
         type: String,
         enum: ['local', 'google'],
@@ -62,6 +66,22 @@ const userSchema = new mongoose.Schema({
         difficulty: String,
         servings: Number,
         favoritedAt: {
+            type: Date,
+            default: Date.now
+        }
+    }],
+    savedMealPlans: [{
+        mealPlanId: String,
+        title: String,
+        summary: {
+            totalDays: Number,
+            mealsPerDay: Number,
+            dailyCalorieGoal: Number,
+            dietaryRestrictions: [String],
+            cuisinePreference: String
+        },
+        mealPlan: mongoose.Schema.Types.Mixed, // Store the full meal plan object
+        savedAt: {
             type: Date,
             default: Date.now
         }

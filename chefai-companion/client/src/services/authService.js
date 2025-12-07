@@ -9,6 +9,14 @@ export const register = async (userData) => {
     if (response.data.token) {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.user));
+        // Apply dark mode if user has preference
+        if (response.data.user?.darkMode) {
+            document.documentElement.classList.add('dark-mode');
+            localStorage.setItem('darkMode', 'true');
+        } else {
+            document.documentElement.classList.remove('dark-mode');
+            localStorage.setItem('darkMode', 'false');
+        }
     }
     return response.data;
 };
@@ -19,6 +27,14 @@ export const login = async (credentials) => {
     if (response.data.token) {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.user));
+        // Apply dark mode if user has preference
+        if (response.data.user?.darkMode) {
+            document.documentElement.classList.add('dark-mode');
+            localStorage.setItem('darkMode', 'true');
+        } else {
+            document.documentElement.classList.remove('dark-mode');
+            localStorage.setItem('darkMode', 'false');
+        }
     }
     return response.data;
 };
@@ -41,6 +57,14 @@ export const googleLogin = async (credential) => {
     if (response.data.token) {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.user));
+        // Apply dark mode if user has preference
+        if (response.data.user?.darkMode) {
+            document.documentElement.classList.add('dark-mode');
+            localStorage.setItem('darkMode', 'true');
+        } else {
+            document.documentElement.classList.remove('dark-mode');
+            localStorage.setItem('darkMode', 'false');
+        }
     }
     return response.data;
 };

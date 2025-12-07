@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-import { getSavedRecipes, getFavoriteRecipes } from '../services/userService';
+import { getSavedRecipes, getFavoriteRecipes, getSavedMealPlans } from '../services/userService';
 import chefLogo from '../assets/chef-logo.png';
 import './Home.css';
 
@@ -10,6 +10,7 @@ function Home() {
     const navigate = useNavigate();
     const [savedCount, setSavedCount] = useState(0);
     const [favoriteCount, setFavoriteCount] = useState(0);
+    const [mealPlanCount, setMealPlanCount] = useState(0);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -19,9 +20,10 @@ function Home() {
     const fetchRecipeCounts = async () => {
         try {
             setLoading(true);
-            const [savedRes, favoriteRes] = await Promise.all([
+            const [savedRes, favoriteRes, mealPlansRes] = await Promise.all([
                 getSavedRecipes(),
-                getFavoriteRecipes()
+                getFavoriteRecipes(),
+                getSavedMealPlans()
             ]);
 
             if (savedRes.success) {
@@ -30,6 +32,10 @@ function Home() {
 
             if (favoriteRes.success) {
                 setFavoriteCount(favoriteRes.recipes?.length || 0);
+            }
+
+            if (mealPlansRes.success) {
+                setMealPlanCount(mealPlansRes.mealPlans?.length || 0);
             }
         } catch (err) {
             console.error('Error fetching recipe counts:', err);
@@ -55,6 +61,19 @@ function Home() {
                             </h1>
                         </div>
                         <div className="user-actions">
+                            <Link to="/profile" className="user-avatar-link">
+                                {user?.avatar ? (
+                                    <img 
+                                        src={user.avatar} 
+                                        alt={user?.name || 'User'} 
+                                        className="user-avatar"
+                                    />
+                                ) : (
+                                    <div className="user-avatar-placeholder">
+                                        <span>{user?.name?.charAt(0)?.toUpperCase() || 'U'}</span>
+                                    </div>
+                                )}
+                            </Link>
                             <Link to="/shared" className="btn btn-secondary">
                                 Shared Recipes
                             </Link>
@@ -75,7 +94,6 @@ function Home() {
                 <div className="welcome-section">
                     <div className="container">
                         <h2>Welcome back, {user?.name}! 👋</h2>
-                        <p>Here are your saved and favourite recipes</p>
                     </div>
                 </div>
             </header>
@@ -89,6 +107,20 @@ function Home() {
                         </div>
                     ) : (
                         <div className="recipe-cards-container">
+                            {/* Meal Planner Card */}
+                            <Link to="/meal-planner" className="recipe-card-link">
+                                <div className="recipe-card">
+                                    <div className="card-icon meal-planner-icon">📅</div>
+                                    <h3 className="card-title">Meal Planner</h3>
+                                    <p className="card-count">Create your meal plan</p>
+                                    <div className="card-arrow">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </Link>
+
                             {/* Favorite Recipes Card */}
                             <Link to="/favorites" className="recipe-card-link">
                                 <div className="recipe-card">
@@ -109,6 +141,20 @@ function Home() {
                                     <div className="card-icon saved-icon">📌</div>
                                     <h3 className="card-title">Saved Recipes</h3>
                                     <p className="card-count">{savedCount} {savedCount === 1 ? 'recipe' : 'recipes'}</p>
+                                    <div className="card-arrow">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </Link>
+
+                            {/* Saved Meal Plans Card */}
+                            <Link to="/saved-meal-plans" className="recipe-card-link">
+                                <div className="recipe-card">
+                                    <div className="card-icon saved-meal-plans-icon">📋</div>
+                                    <h3 className="card-title">Saved Meal Plans</h3>
+                                    <p className="card-count">{mealPlanCount} {mealPlanCount === 1 ? 'plan' : 'plans'}</p>
                                     <div className="card-arrow">
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                             <path d="M5 12h14M12 5l7 7-7 7"/>

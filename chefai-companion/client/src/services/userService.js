@@ -39,11 +39,56 @@ export const deleteFavoriteRecipe = async (recipeId) => {
     return response.data;
 };
 
+// Save a meal plan
+export const saveMealPlan = async (mealPlan, title) => {
+    const response = await api.post('/user/meal-plans/save', { mealPlan, title });
+    return response.data;
+};
+
+// Get saved meal plans
+export const getSavedMealPlans = async () => {
+    const response = await api.get('/user/meal-plans/saved');
+    return response.data;
+};
+
+// Delete saved meal plan
+export const deleteSavedMealPlan = async (mealPlanId) => {
+    const response = await api.delete(`/user/meal-plans/saved/${mealPlanId}`);
+    return response.data;
+};
+
+// Get user profile
+export const getUserProfile = async () => {
+    const response = await api.get('/user/profile');
+    return response.data;
+};
+
+// Update user profile
+export const updateUserProfile = async (profileData) => {
+    const response = await api.put('/user/profile', profileData);
+    return response.data;
+};
+
+// Change password
+export const changePassword = async (currentPassword, newPassword) => {
+    const response = await api.put('/user/change-password', {
+        currentPassword,
+        newPassword
+    });
+    return response.data;
+};
+
 export default {
     saveRecipe,
     favoriteRecipe,
     getSavedRecipes,
     getFavoriteRecipes,
     deleteSavedRecipe,
-    deleteFavoriteRecipe
+    deleteFavoriteRecipe,
+    saveMealPlan,
+    getSavedMealPlans,
+    deleteSavedMealPlan,
+    getUserProfile,
+    updateUserProfile,
+    changePassword
 };

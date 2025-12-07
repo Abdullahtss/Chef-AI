@@ -9,6 +9,9 @@ import Home from './pages/Home'
 import SavedRecipesPage from './pages/SavedRecipesPage'
 import FavoriteRecipesPage from './pages/FavoriteRecipesPage'
 import SharedRecipesPage from './pages/SharedRecipesPage'
+import MealPlannerPage from './pages/MealPlannerPage'
+import SavedMealPlansPage from './pages/SavedMealPlansPage'
+import ProfilePage from './pages/ProfilePage'
 import LandingPage from './pages/LandingPage'
 import './App.css'
 
@@ -36,6 +39,9 @@ function App() {
                         <Route path="/saved" element={<SavedRecipesPage />} />
                         <Route path="/favorites" element={<FavoriteRecipesPage />} />
                         <Route path="/shared" element={<SharedRecipesPage />} />
+                        <Route path="/meal-planner" element={<MealPlannerPage />} />
+                        <Route path="/saved-meal-plans" element={<SavedMealPlansPage />} />
+                        <Route path="/profile" element={<ProfilePage />} />
                         <Route path="/recipes" element={
                             <div className="app">
                                 <header className="app-header">

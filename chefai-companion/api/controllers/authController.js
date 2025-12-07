@@ -50,7 +50,9 @@ export const register = async (req, res) => {
             user: {
                 id: user._id,
                 name: user.name,
-                email: user.email
+                email: user.email,
+                avatar: user.avatar,
+                darkMode: user.darkMode || false
             }
         });
     } catch (error) {
@@ -108,7 +110,9 @@ export const login = async (req, res) => {
             user: {
                 id: user._id,
                 name: user.name,
-                email: user.email
+                email: user.email,
+                avatar: user.avatar,
+                darkMode: user.darkMode || false
             }
         });
     } catch (error) {
@@ -200,7 +204,8 @@ export const googleAuth = async (req, res) => {
                 id: user._id,
                 name: user.name,
                 email: user.email,
-                avatar: user.avatar
+                avatar: user.avatar,
+                darkMode: user.darkMode || false
             }
         });
     } catch (error) {

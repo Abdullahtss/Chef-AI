@@ -297,6 +297,44 @@ p {
   font-family: var(--font-display);
 }
 
+/* ===== DARK MODE ===== */
+.dark-mode {
+  --background-light: #1a1a1a;
+  --steel-grey-dark: #f5f5f5;
+  --steel-grey: #d1d5db;
+  --steel-grey-light: #9ca3af;
+  --card-bg: #2d2d2d;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+.dark-mode body {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  color: #f5f5f5;
+}
+
+.dark-mode .input {
+  background: #2d2d2d;
+  border-color: #404040;
+  color: #f5f5f5;
+}
+
+.dark-mode .input:focus {
+  border-color: var(--herb-green);
+}
+
+.dark-mode .card {
+  background: #2d2d2d;
+  color: #f5f5f5;
+}
+
+.dark-mode .card-glass {
+  background: rgba(45, 45, 45, 0.8);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   h1 {

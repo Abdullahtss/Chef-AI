@@ -318,6 +318,83 @@
     box-shadow: var(--shadow-md);
 }
 
+/* ===== DARK MODE ===== */
+.dark-mode .recipe-card {
+    background: #2d2d2d;
+    border-color: #404040;
+    color: #f5f5f5;
+}
+
+.dark-mode .recipe-card:hover {
+    border-color: var(--herb-green);
+}
+
+.dark-mode .recipe-actions {
+    background: #1a1a1a;
+    border-bottom-color: #404040;
+}
+
+.dark-mode .btn-action {
+    background: #2d2d2d;
+    border-color: #404040;
+    color: #f5f5f5;
+}
+
+.dark-mode .btn-action:hover:not(:disabled) {
+    background: #404040;
+}
+
+.dark-mode .recipe-meta {
+    background: #1a1a1a;
+    border-bottom-color: #404040;
+}
+
+.dark-mode .meta-value {
+    color: #f5f5f5;
+}
+
+.dark-mode .meta-label {
+    color: #9ca3af;
+}
+
+.dark-mode .recipe-section {
+    background: #2d2d2d;
+    border-bottom-color: #404040;
+}
+
+.dark-mode .section-title {
+    color: #f5f5f5 !important;
+    border-bottom-color: #404040;
+}
+
+.dark-mode .ingredient-item {
+    background: #1a1a1a;
+    color: #f5f5f5;
+}
+
+.dark-mode .ingredient-item:hover {
+    background: #2d2d2d;
+}
+
+.dark-mode .instruction-text {
+    color: #d1d5db;
+}
+
+.dark-mode .instructions-container {
+    background: #2d2d2d;
+}
+
+.dark-mode .btn-expand {
+    background: #1a1a1a;
+    border-color: var(--herb-green);
+    color: var(--herb-green);
+}
+
+.dark-mode .btn-expand:hover {
+    background: var(--herb-green);
+    color: white;
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .recipe-meta {

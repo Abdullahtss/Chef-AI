@@ -145,6 +145,33 @@
     font-weight: 500;
 }
 
+/* ===== DARK MODE ===== */
+.dark-mode .generator-section h2 {
+    color: #f5f5f5;
+}
+
+.dark-mode .section-description {
+    color: #9ca3af;
+}
+
+.dark-mode .ingredient-tags {
+    background: #2d2d2d;
+}
+
+.dark-mode .recipes-title {
+    color: #f5f5f5;
+}
+
+.dark-mode .loading-state p {
+    color: #d1d5db;
+}
+
+.dark-mode .error-message {
+    background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%);
+    color: #fecaca;
+    border-left-color: #dc2626;
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .ingredient-input-group {

@@ -85,6 +85,30 @@
     font-size: 0.875rem;
 }
 
+/* ===== DARK MODE ===== */
+.dark-mode .app {
+    background: #1a1a1a;
+    color: #f5f5f5;
+}
+
+.dark-mode .app-header {
+    background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+}
+
+.dark-mode .app-main {
+    background: #1a1a1a;
+    color: #f5f5f5;
+}
+
+.dark-mode .app-footer {
+    background: #1a1a1a;
+    color: #9ca3af;
+}
+
+.dark-mode .app-footer p {
+    color: #9ca3af;
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .app-header {

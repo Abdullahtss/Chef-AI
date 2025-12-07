@@ -571,3 +571,69 @@
         font-size: 22px;
     }
 }
+
+/* ===== DARK MODE ===== */
+.dark-mode .signup-page {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+}
+
+.dark-mode .signup-form-container {
+    background: #2d2d2d;
+    color: #f5f5f5;
+}
+
+.dark-mode .form-title {
+    color: #f5f5f5;
+}
+
+.dark-mode .form-subtitle {
+    color: #9ca3af;
+}
+
+.dark-mode .form-label {
+    color: #e5e7eb;
+}
+
+.dark-mode .form-input {
+    background: #1a1a1a;
+    border-color: #404040;
+    color: #f5f5f5;
+}
+
+.dark-mode .form-input:focus {
+    border-color: #667eea;
+}
+
+.dark-mode .form-input::placeholder {
+    color: #9ca3af;
+}
+
+.dark-mode .input-icon {
+    color: #9ca3af;
+}
+
+.dark-mode .divider {
+    color: #9ca3af;
+}
+
+.dark-mode .divider::before {
+    background: #404040;
+}
+
+.dark-mode .divider span {
+    background: #2d2d2d;
+}
+
+.dark-mode .login-prompt {
+    color: #9ca3af;
+}
+
+.dark-mode .terms-text {
+    color: #9ca3af;
+}
+
+.dark-mode .error-alert {
+    background: #7f1d1d;
+    border-color: #991b1b;
+    color: #fecaca;
+}

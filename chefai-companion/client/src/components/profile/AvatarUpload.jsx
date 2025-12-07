@@ -1,1 +1,0 @@
-// AvatarUpload Component 

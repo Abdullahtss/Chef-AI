@@ -6,6 +6,7 @@ import recipeRoutes from './routes/recipeRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import sharedRecipeRoutes from './routes/sharedRecipeRoutes.js';
+import mealPlannerRoutes from './routes/mealPlannerRoutes.js';
 
 dotenv.config();
 
@@ -24,13 +25,16 @@ const corsOptions = {
   optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
-app.use(express.json());
+// Increase JSON body size limit to handle base64 image uploads (10MB)
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Routes
 app.use('/api/recipes', recipeRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/shared', sharedRecipeRoutes);
+app.use('/api/meal-planner', mealPlannerRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

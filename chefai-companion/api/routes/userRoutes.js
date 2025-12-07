@@ -5,7 +5,13 @@ import {
     getSavedRecipes,
     getFavoriteRecipes,
     deleteSavedRecipe,
-    deleteFavoriteRecipe
+    deleteFavoriteRecipe,
+    saveMealPlan,
+    getSavedMealPlans,
+    deleteSavedMealPlan,
+    getUserProfile,
+    updateUserProfile,
+    changePassword
 } from '../controllers/userController.js';
 import auth from '../middleware/auth.js';
 
@@ -18,5 +24,15 @@ router.get('/recipes/saved', auth, getSavedRecipes);
 router.get('/recipes/favorites', auth, getFavoriteRecipes);
 router.delete('/recipes/saved/:recipeId', auth, deleteSavedRecipe);
 router.delete('/recipes/favorites/:recipeId', auth, deleteFavoriteRecipe);
+
+// Meal Plan routes
+router.post('/meal-plans/save', auth, saveMealPlan);
+router.get('/meal-plans/saved', auth, getSavedMealPlans);
+router.delete('/meal-plans/saved/:mealPlanId', auth, deleteSavedMealPlan);
+
+// Profile routes
+router.get('/profile', auth, getUserProfile);
+router.put('/profile', auth, updateUserProfile);
+router.put('/change-password', auth, changePassword);
 
 export default router;

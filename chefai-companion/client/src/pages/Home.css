@@ -80,6 +80,53 @@
     align-items: center;
 }
 
+.user-avatar-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.user-avatar-link:hover {
+    transform: scale(1.05);
+}
+
+.user-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #667eea;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.user-avatar:hover {
+    border-color: #764ba2;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.user-avatar-placeholder {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border: 2px solid #667eea;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.user-avatar-placeholder:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
 .btn.btn-outline,
 button.btn.btn-outline {
     background: #667eea !important;
@@ -279,6 +326,14 @@ button.btn.btn-outline:active {
     animation-delay: 0.5s;
 }
 
+.meal-planner-icon {
+    animation-delay: 0.25s;
+}
+
+.saved-meal-plans-icon {
+    animation-delay: 0.75s;
+}
+
 
 .card-title {
     font-size: 1.5rem;
@@ -452,24 +507,57 @@ button.btn.btn-outline:active {
 }
 
 .btn-secondary {
-    background: #ffffff;
-    color: #667eea;
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
+    background: #667eea !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: #ffffff !important;
+    padding: 0.875rem 1.75rem;
+    border-radius: 10px;
     font-weight: 600;
+    font-size: 0.9375rem;
     text-decoration: none;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
     transition: all 0.3s ease;
-    border: 1px solid #e5e7eb;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 2px solid #667eea !important;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3),
+                0 2px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    font-family: inherit;
+}
+
+.btn-secondary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-secondary:hover::before {
+    left: 100%;
 }
 
 .btn-secondary:hover {
-    background: #f9fafb;
-    border-color: #667eea;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
-    color: #764ba2;
+    background: #5568d3 !important;
+    background: linear-gradient(135deg, #5568d3 0%, #6a3d8f 100%) !important;
+    border-color: #5568d3 !important;
+    color: #ffffff !important;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4),
+                0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-secondary:active {
+    background: #667eea !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
 }
 
 .app-footer {
@@ -591,4 +679,61 @@ button.btn.btn-outline:active {
     .welcome-section h2 {
         font-size: 1.875rem;
     }
+}
+
+/* ===== DARK MODE ===== */
+.dark-mode .home-page {
+    background: #1a1a1a;
+    color: #f5f5f5;
+}
+
+.dark-mode .home-header {
+    background: #2d2d2d;
+    border-bottom-color: #404040;
+}
+
+.dark-mode .logo-section .logo {
+    color: #f5f5f5;
+}
+
+.dark-mode .welcome-section {
+    background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+}
+
+.dark-mode .welcome-section h2 {
+    color: #f5f5f5;
+}
+
+.dark-mode .welcome-section p {
+    color: #d1d5db;
+}
+
+.dark-mode .recipe-card {
+    background: #2d2d2d;
+    border-color: #404040;
+    color: #f5f5f5;
+}
+
+.dark-mode .recipe-card:hover {
+    border-color: #667eea;
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.2),
+                0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .card-title {
+    color: #f5f5f5;
+}
+
+.dark-mode .card-count {
+    color: #9ca3af;
+}
+
+.dark-mode .app-footer {
+    background: #1a1a1a;
+    color: #9ca3af;
+}
+
+.dark-mode .loading-state p,
+.dark-mode .empty-state p {
+    color: #d1d5db;
 }
