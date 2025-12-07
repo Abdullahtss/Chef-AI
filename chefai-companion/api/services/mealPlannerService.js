@@ -21,6 +21,11 @@ if (!GROQ_API_KEY) {
  */
 export async function generateMealPlan(preferences) {
     try {
+        // Check if Groq API key is available
+        if (!GROQ_API_KEY) {
+            throw new Error('GROQ_API_KEY is not configured. Please set it in your environment variables.');
+        }
+
         const {
             dietaryRestrictions = [],
             dailyCalorieGoal,
@@ -110,29 +115,58 @@ Format your response as a JSON object with this exact structure:
 Return ONLY the JSON object, no additional text. Do not include markdown formatting like \`\`\`json.`;
 
         console.log('Sending request to Groq API...');
+        console.log('API Key present:', GROQ_API_KEY ? `Yes (${GROQ_API_KEY.substring(0, 10)}...)` : 'No');
 
         // Using llama-3.3-70b-versatile (replacement for decommissioned llama-3.1-70b-versatile)
         // Alternative models: 'llama-3.1-8b-instant', 'mixtral-8x7b-32768', 'gemma-7b-it'
         const model = process.env.GROQ_MODEL || 'llama-3.3-70b-versatile';
 
-        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${GROQ_API_KEY}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                model: model,
-                messages: [
-                    {
-                        role: 'user',
-                        content: prompt
-                    }
-                ],
-                temperature: 0.7,
-                max_tokens: 8000
-            })
-        });
+        let response;
+        try {
+            // Create AbortController for timeout (compatible with all Node versions)
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 120000); // 2 minute timeout
+
+            response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${GROQ_API_KEY}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    model: model,
+                    messages: [
+                        {
+                            role: 'user',
+                            content: prompt
+                        }
+                    ],
+                    temperature: 0.7,
+                    max_tokens: 8000
+                }),
+                signal: controller.signal
+            });
+
+            clearTimeout(timeoutId);
+        } catch (fetchError) {
+            console.error('Fetch error details:', fetchError);
+            console.error('Error name:', fetchError.name);
+            console.error('Error message:', fetchError.message);
+            console.error('Error code:', fetchError.code);
+            
+            // Handle different types of fetch errors
+            if (fetchError.name === 'AbortError' || fetchError.name === 'TimeoutError') {
+                throw new Error('Request to Groq API timed out. Please try again with a simpler meal plan request.');
+            } else if (fetchError.code === 'ENOTFOUND' || fetchError.code === 'ECONNREFUSED') {
+                throw new Error('Unable to connect to Groq API. Please check your internet connection.');
+            } else if (fetchError.message && fetchError.message.includes('fetch failed')) {
+                throw new Error('Network error: Failed to reach Groq API. Please check your internet connection and try again.');
+            } else if (fetchError.message && fetchError.message.includes('certificate')) {
+                throw new Error('SSL certificate error. Please check your system time and date settings.');
+            } else {
+                throw new Error(`Network error: ${fetchError.message || 'Unknown error occurred'}`);
+            }
+        }
 
         if (!response.ok) {
             const errorData = await response.text();
@@ -182,7 +216,18 @@ Return ONLY the JSON object, no additional text. Do not include markdown formatt
 
     } catch (error) {
         console.error('Error generating meal plan:', error);
-        throw new Error(`Failed to generate meal plan: ${error.message}`);
+        console.error('Error stack:', error.stack);
+        
+        // Provide more helpful error messages
+        if (error.message.includes('fetch failed') || error.message.includes('Network error')) {
+            throw new Error('Network error: Unable to connect to Groq API. Please check your internet connection and try again.');
+        } else if (error.message.includes('timeout') || error.message.includes('Timeout')) {
+            throw new Error('Request timed out. The meal plan request is taking too long. Please try again with fewer days or meals.');
+        } else if (error.message.includes('GROQ_API_KEY')) {
+            throw new Error('Groq API key is not configured. Please set GROQ_API_KEY in your environment variables.');
+        } else {
+            throw new Error(`Failed to generate meal plan: ${error.message}`);
+        }
     }
 }
 

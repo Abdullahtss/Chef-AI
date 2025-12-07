@@ -66,6 +66,7 @@ function LandingPage() {
                         <ul>
                             <li><a href="#features">Features</a></li>
                             <li><a href="#pricing">Pricing</a></li>
+                            <li><Link to="/support">Support</Link></li>
                             <li><Link to="/login" className="btn-nav">Login</Link></li>
                             <li><Link to="/signup" className="btn-nav">Sign Up</Link></li>
                         </ul>

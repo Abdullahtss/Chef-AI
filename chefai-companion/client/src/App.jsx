@@ -13,6 +13,7 @@ import MealPlannerPage from './pages/MealPlannerPage'
 import SavedMealPlansPage from './pages/SavedMealPlansPage'
 import ProfilePage from './pages/ProfilePage'
 import LandingPage from './pages/LandingPage'
+import SupportPage from './pages/SupportPage'
 import './App.css'
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
                 <Routes>
                     {/* Public Routes */}
                     <Route path="/" element={<LandingPage />} />
+                    <Route path="/support" element={<SupportPage />} />
                     <Route path="/login" element={
                         <PublicRoute>
                             <Login />
