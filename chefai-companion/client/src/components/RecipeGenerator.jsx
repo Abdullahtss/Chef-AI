@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import axios from 'axios'
+import api from '../services/api'
 import RecipeCard from './RecipeCard'
 import './RecipeGenerator.css'
 
@@ -33,7 +33,7 @@ function RecipeGenerator() {
         setRecipes([])
 
         try {
-            const response = await axios.post('/api/recipes/generate', {
+            const response = await api.post('/recipes/generate', {
                 ingredients: ingredientList
             })
 
