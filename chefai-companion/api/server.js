@@ -58,6 +58,52 @@ app.get('/api/debug', (req, res) => {
   });
 });
 
+// Test Groq API directly for recipes
+app.get('/api/test-groq', async (req, res) => {
+  const groqKey = process.env.GROQ_API_KEY;
+
+  if (!groqKey) {
+    return res.status(500).json({ error: 'GROQ_API_KEY not set' });
+  }
+
+  try {
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${groqKey}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages: [{ role: 'user', content: 'Say hello in JSON format: {"message": "hello"}' }],
+        temperature: 0.7,
+        max_tokens: 100
+      })
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      return res.status(response.status).json({
+        error: 'Groq API Error',
+        status: response.status,
+        details: errorText
+      });
+    }
+
+    const data = await response.json();
+    res.json({
+      success: true,
+      message: 'Groq API is working!',
+      response: data.choices[0].message.content
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: 'Failed to call Groq API',
+      message: error.message
+    });
+  }
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
