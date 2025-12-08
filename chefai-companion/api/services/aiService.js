@@ -13,23 +13,21 @@ const openRouterKey = process.env.OPENROUTER_API_KEY || process.env.OPENAI_API_K
  * @returns {Promise<Array>} Array of recipe objects
  */
 export async function generateRecipes(ingredients) {
-    // Use OpenRouter first (works on localhost), fall back to Groq (works everywhere)
-    if (openRouterKey) {
-        console.log('Using OpenRouter API...');
-        try {
-            return await generateRecipesWithOpenRouter(ingredients);
-        } catch (error) {
-            console.log('OpenRouter failed, trying Groq...', error.message);
-            if (groqKey) {
-                return await generateRecipesWithGroq(ingredients);
-            }
-            throw error;
-        }
+    // In production (Railway), use Groq directly (it works everywhere)
+    // On localhost, use OpenRouter (it works locally)
+    const isProduction = process.env.NODE_ENV === 'production';
+
+    if (isProduction && groqKey) {
+        console.log('Production mode: Using Groq API...');
+        return generateRecipesWithGroq(ingredients);
+    } else if (openRouterKey) {
+        console.log('Development mode: Using OpenRouter API...');
+        return generateRecipesWithOpenRouter(ingredients);
     } else if (groqKey) {
-        console.log('Using Groq API...');
+        console.log('Using Groq API (fallback)...');
         return generateRecipesWithGroq(ingredients);
     } else {
-        throw new Error('No API key found. Please add OPENROUTER_API_KEY or GROQ_API_KEY to your environment variables.');
+        throw new Error('No API key found. Please add GROQ_API_KEY or OPENROUTER_API_KEY to your environment variables.');
     }
 }
 
