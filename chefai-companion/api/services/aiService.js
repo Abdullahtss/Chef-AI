@@ -2,30 +2,31 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// Get API keys from environment variables
-const groqKey = process.env.GROQ_API_KEY;
-const openRouterKey = process.env.OPENROUTER_API_KEY || process.env.OPENAI_API_KEY;
-
 /**
  * Generate 4-5 recipes based on provided ingredients
- * Uses OpenRouter first, falls back to Groq
+ * Uses Groq in production, OpenRouter in development
  * @param {Array<string>} ingredients - List of available ingredients
  * @returns {Promise<Array>} Array of recipe objects
  */
 export async function generateRecipes(ingredients) {
-    // In production (Railway), use Groq directly (it works everywhere)
-    // On localhost, use OpenRouter (it works locally)
+    // Read API keys inside the function (not at module load time)
+    const groqKey = process.env.GROQ_API_KEY;
+    const openRouterKey = process.env.OPENROUTER_API_KEY || process.env.OPENAI_API_KEY;
     const isProduction = process.env.NODE_ENV === 'production';
+
+    console.log('Environment:', isProduction ? 'PRODUCTION' : 'DEVELOPMENT');
+    console.log('GROQ_API_KEY available:', !!groqKey);
+    console.log('OpenRouter key available:', !!openRouterKey);
 
     if (isProduction && groqKey) {
         console.log('Production mode: Using Groq API...');
-        return generateRecipesWithGroq(ingredients);
+        return generateRecipesWithGroq(ingredients, groqKey);
     } else if (openRouterKey) {
         console.log('Development mode: Using OpenRouter API...');
-        return generateRecipesWithOpenRouter(ingredients);
+        return generateRecipesWithOpenRouter(ingredients, openRouterKey);
     } else if (groqKey) {
         console.log('Using Groq API (fallback)...');
-        return generateRecipesWithGroq(ingredients);
+        return generateRecipesWithGroq(ingredients, groqKey);
     } else {
         throw new Error('No API key found. Please add GROQ_API_KEY or OPENROUTER_API_KEY to your environment variables.');
     }
@@ -34,7 +35,7 @@ export async function generateRecipes(ingredients) {
 /**
  * Generate recipes using Groq API (works on localhost and production)
  */
-async function generateRecipesWithGroq(ingredients) {
+async function generateRecipesWithGroq(ingredients, groqKey) {
     try {
         console.log('Groq API Key loaded:', groqKey ? `Yes (starts with: ${groqKey.substring(0, 10)}...)` : 'No - MISSING!');
 
@@ -155,7 +156,7 @@ Return ONLY the JSON array, no additional text. Do not include markdown formatti
 /**
  * Generate recipes using OpenRouter API (works on localhost)
  */
-async function generateRecipesWithOpenRouter(ingredients) {
+async function generateRecipesWithOpenRouter(ingredients, openRouterKey) {
     try {
         console.log('OpenRouter API Key loaded:', openRouterKey ? `Yes (starts with: ${openRouterKey.substring(0, 15)}...)` : 'No - MISSING!');
 
