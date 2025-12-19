@@ -94,10 +94,10 @@ function SupportPage() {
                                 <div className="info-row">
                                     <span className="info-label">Account Title:</span>
                                     <div className="info-value-group">
-                                        <span className="info-value">Muhammad Khuzema Asim</span>
+                                        <span className="info-value">Abdullah Bin Ahmed</span>
                                         <button 
                                             className="copy-btn"
-                                            onClick={() => copyToClipboard('Muhammad Khuzema Asim', 'name')}
+                                            onClick={() => copyToClipboard('Abdullah Bin Ahmed', 'name')}
                                             title="Copy to clipboard"
                                         >
                                             {copiedField === 'name' ? '✓ Copied' : '📋 Copy'}
@@ -108,10 +108,10 @@ function SupportPage() {
                                 <div className="info-row">
                                     <span className="info-label">Account Number:</span>
                                     <div className="info-value-group">
-                                        <span className="info-value highlight">02860110802225</span>
+                                        <span className="info-value highlight">03367402002</span>
                                         <button 
                                             className="copy-btn"
-                                            onClick={() => copyToClipboard('02860110802225', 'account')}
+                                            onClick={() => copyToClipboard('03367402002', 'account')}
                                             title="Copy to clipboard"
                                         >
                                             {copiedField === 'account' ? '✓ Copied' : '📋 Copy'}
@@ -121,7 +121,7 @@ function SupportPage() {
                                 
                                 <div className="info-row">
                                     <span className="info-label">Bank Name:</span>
-                                    <span className="info-value">Meezan Bank</span>
+                                    <span className="info-value">jazzcash</span>
                                 </div>
                             </div>
 
